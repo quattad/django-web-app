@@ -14,18 +14,39 @@ Give examples
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+Install virtualenvwrapper or virtualenvwrapper-win for Windows.
 
 ```
-Give the example
+$ pip install virtualenvwrapper-win
 ```
 
-And repeat
+Change directory to project folder and create migrations file:
 
 ```
-until finished
+$ python manage.py makemigrations
+```
+
+Check that generated migrations file (e.g. 0001_initial.py) contains SQL code to create table:
+
+```
+$ python manage.py sqlmigrate blog 0001
+```
+
+Create table blog_post:
+
+```
+$ python manage.py migrate
+```
+
+Check that table has been successfully created:
+
+```
+$ python 
+```
+
+Run the development server:
+```
+$ python manage.py runserver
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
