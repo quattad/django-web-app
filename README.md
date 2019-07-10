@@ -49,6 +49,12 @@ Run the development server:
 $ python manage.py runserver
 ```
 
+Run Python API to access and retrieve from database:
+
+```
+$ python manage.py shell
+```
+
 End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
