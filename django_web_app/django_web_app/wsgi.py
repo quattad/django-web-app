@@ -2,6 +2,7 @@
 WSGI config for django_web_app project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
+Allows web application to communicate with the web server
 
 For more information on this file, see
 https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/

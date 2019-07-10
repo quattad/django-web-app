@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages # specify what messages you want to add
+from django.contrib import messages  # specify what messages you want to add
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
@@ -35,7 +35,7 @@ def register(request):
 @login_required  # decorators add functionality to existing function
 def profile(request):
     if request.method == 'GET':
-        u_form = UserUpdateForm(instance=request.user)  # can populate form by passing in instance of object that it expects
+        u_form = UserUpdateForm(instance=request.user)   # can populate form by passing in instance of object that it expects
         p_form = ProfileUpdateForm(instance=request.user.profile)
     else:
         u_form = UserUpdateForm(request.POST, instance=request.user)  # pass in POST data as well

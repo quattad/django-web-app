@@ -8,6 +8,8 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
+
+Register applications, define location of static files, database configuration details
 """
 
 import os
@@ -28,11 +30,14 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+"""
+Define apps (e.g. blog, users) and other middleware here essential for authentication and sessions
+Can define full path to object (e.g. blog.apps.BlogConfig) or by class name (e.g. 'blog)
+"""
 
 INSTALLED_APPS = [
-    'blog.apps.BlogConfig',
-    'users.apps.UsersConfig',
+    'blog',
+    'users',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
