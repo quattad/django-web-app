@@ -11,7 +11,7 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)  # don't pass in now as a function
     author = models.ForeignKey(User, on_delete=models.CASCADE)  # if author is deleted, delete their post as well. however, user is not deleted alongside post; one-way deletion.
 
-# One user can have multiple posts but post can only have 1 author what is this supposed to do?
+# Function to generate string representing Post object
     def __str__(self):
         return self.title
 
