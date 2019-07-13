@@ -16,6 +16,8 @@ from .models import Post
 Example of Function-Based View
 - Requires passing in the data
 """
+
+
 def home(request):
     context = {
         'posts': Post.objects.all()  # pass in data from database
@@ -84,4 +86,6 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 def about(request):
-    return render(request, 'blog/about.html', { 'title':'About' })
+    return render(request, 'blog/about.html',
+                  {'title': 'About'}
+                  )
