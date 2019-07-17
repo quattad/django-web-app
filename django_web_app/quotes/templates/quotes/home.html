@@ -1,0 +1,23 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-8">Keep yourself going.</h1>
+  <p class="lead">Generate quotes, and save your favourite ones.</p>
+</div>
+<div>
+    <ul class="list-group">
+        {% for dict in quotes %}
+            <li class="list-group-item">
+                {% for key, value in dict.items %}
+                    {% if key == 'content' %}
+                        Value: {{ value }}
+                    {% endif %}
+                    {% if key == 'title' %}
+                        Value: {{ value }}
+                    {% endif %}
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}

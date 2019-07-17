@@ -36,8 +36,9 @@ Can define full path to object (e.g. blog.apps.BlogConfig) or by class name (e.g
 """
 
 INSTALLED_APPS = [
-    'blog',
-    'users',
+    'blog.apps.BlogConfig',
+    'users.apps.UsersConfig',
+    'quotes.apps.QuotesConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
