@@ -1,23 +1,25 @@
 {% extends "blog/base.html" %}
 {% block content %}
 <div class="jumbotron">
-  <h1 class="display-8">Keep yourself going.</h1>
+  <h1 class="display-9">Keep yourself going.</h1>
   <p class="lead">Generate quotes, and save your favourite ones.</p>
 </div>
 <div>
     <ul class="list-group">
-        {% for dict in quotes %}
+        {% for quote in quotes %}
             <li class="list-group-item">
-                {% for key, value in dict.items %}
-                    {% if key == 'content' %}
-                        Value: {{ value }}
-                    {% endif %}
-                    {% if key == 'title' %}
-                        Value: {{ value }}
-                    {% endif %}
-                {% endfor %}
-            </li>
+                <div> {{ quote.content }} </div>
+                <div> <b> {{ quote.author }} </b> </div>
+
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <form method = "post">
+                    {% csrf_token %}
+                    <button type="submit" value={{ quote.id }} name="submit_user_like" class="btn btn-secondary" role="button">Like</a>
+                    <button type="submit" value={{ quote.id }} name="submit_user_favourite" class="btn btn-secondary" role="button">Favourite</a>
+                </form>
+            </div>
         {% endfor %}
+            </li>
     </ul>
 </div>
 {% endblock content %}

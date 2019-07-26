@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import (PostListView,
                     PostDetailView,
                     PostCreateView,
@@ -6,6 +6,8 @@ from .views import (PostListView,
                     PostDeleteView)
 from . import views
 
+import sys
+sys.path.append('..')
 
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),  # convert to an actual view using method as_view(). looks for naming convention <app>/<model>__<viewtype>.html
@@ -16,4 +18,5 @@ urlpatterns = [
     path('post/<int:pk>/update', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete', PostDeleteView.as_view(), name='post-delete'),
     path('about/', views.about, name='blog-about'),
+    path('quotes/', include('quotes.urls'))
 ]
