@@ -7,13 +7,17 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
 from django.contrib import messages
 import requests, json, html
+from urllib.parse import urlencode
 
 from .models import Quote
 
 @login_required
 def home(request):
     if request.method == "GET":
-        response = requests.get("https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=15")
+        posts = request.GET.get('posts', 4)
+        page = request.GET.get('page', 1)
+        
+        response = requests.get("https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=30")
         data = response.json()
 
         quotes = []
@@ -21,7 +25,7 @@ def home(request):
         for dict_item in data:
             for key, value in dict_item.items():
                 if key == 'content':
-                    dict_item[key] = value.replace("<p>", "").replace("</p>", "")
+                    dict_item[key] = value.replace("<p>", "").replace("</p>", "").replace("<br />", "")
                     # Replace numeric character references
                     dict_item[key] = html.unescape(dict_item[key])
                 
@@ -43,8 +47,7 @@ def home(request):
             quotes.append(quote)
         
         # Paginate quotes
-        quote_paginator = Paginator(quotes, 5)
-        page = request.GET.get('page')
+        quote_paginator = Paginator(quotes, posts)
         
         try:
             quotes = quote_paginator.get_page(page)
@@ -53,11 +56,19 @@ def home(request):
         except EmptyPage:
             quotes = quote_paginator.page(page.num_pages)
         
-
-        return render(request, 'quotes/home.html', {'quotes': quotes})
+        # Debugging
+        print("page=" + str(page))
+        print("posts=" + str(posts))
+        
+        return render(request, 'quotes/home.html', {'quotes': quotes, 'posts': posts, 'page': page, 'max_posts':list(range(3, 6))})
             
     
     elif request.method == "POST":
+        # URL queries are always fetched via GET, not POST
+        # request.POST.get() is only for retrieving from request.body
+        posts = request.GET.get('posts', 4)
+        page = request.GET.get('page', 1)
+
         if request.user is not AnonymousUser and isinstance(request.POST.get('submit_user_like'), str):
             # Fetch quote liked from existing database
             quote_liked = get_object_or_404(Quote, id=request.POST.get('submit_user_like'))
@@ -67,12 +78,17 @@ def home(request):
             
             messages.success(request, "Liked!")
         elif request.user is not AnonymousUser and isinstance(request.POST.get('submit_user_favourite'), str):
-            # Fetch quote liked from existing database
+            # Fetch quote from existing database
             quote_favourited = get_object_or_404(Quote, id=request.POST.get('submit_user_favourite'))
              
-            # Add user to user_liked field of quote
+            # Add user to user_favourited field of quote
             quote_favourited.user_favourited.add(request.user)
             
             messages.success(request, "Favourited!")
         
-        return redirect('quotes-home') 
+        # Build redirect string back to 'quotes-home' with 'posts' and 'page' url query
+        base_url = reverse('quotes-home')
+        query_string = urlencode({'page':page})
+        url = '{}?{}'.format(base_url, query_string)
+
+        return redirect(url)

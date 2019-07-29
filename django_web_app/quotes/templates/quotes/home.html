@@ -5,27 +5,40 @@
   <p class="lead">Generate quotes, and save your favourite ones.</p>
 </div>
 
-<nav aria-label="page-navigation">
-    <ul class="pagination">
-        {% if quotes.has_previous %}
-        <li class="page-item"><a class="page-link" href="?page={{ quotes.previous_page_number }}">&laquo;</a></li>
-        {% else %}
-        <li class="page-item disabled" aria-disabled="true"><span class="page-link">&laquo;</span></li>
-        {% endif %}
-        {% for i in quotes.paginator.page_range %}
-            {% if quotes.number == i %}
-            <li class="page-item active"><span class="page-link">{{ i }}<span class="sr-only">(current)</span></span></li>
+<div class="d-flex justify-content-between">
+    <nav aria-label="page-navigation">
+        <ul class="pagination">
+            {% if quotes.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ quotes.previous_page_number }}">&laquo;</a></li>
             {% else %}
-            <li class="page-item page-link"><a href="?page={{ i }}">{{ i }}</a></li>
+            <li class="page-item disabled" aria-disabled="true"><span class="page-link">&laquo;</span></li>
             {% endif %}
+            {% for i in quotes.paginator.page_range %}
+                {% if quotes.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }}<span class="sr-only">(current)</span></span></li>
+                {% else %}
+                <li class="page-item page-link"><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if quotes.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ quotes.next_page_number }}">&raquo;</a></li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Posts/Page
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {% for i in max_posts %}
+            <a class="dropdown-item" href="?posts={{ i }}&page={{ page }}">{{ i }}</a>
         {% endfor %}
-        {% if quotes.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{ quotes.next_page_number }}">&raquo;</a></li>
-        {% else %}
-            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
-        {% endif %}
-    </ul>
-</nav>
+    </div>
+  </div>
+</div>
 <br />
 
 <div>
@@ -36,9 +49,9 @@
                 <div> <b> {{ quote.author }} </b> </div>
 
             <div class="btn-group" role="group" aria-label="Basic example">
-                <form method = "post">
+                <form method = "post" action="?page={{ page }}&posts={{ posts }}">
                     {% csrf_token %}
-                    <button type="submit" value={{ quote.id }} name="submit_user_like" class="btn btn-secondary" role="button">Like</a>
+                    <button type="submit" value={{ quote.id }} data-value={{ page }} name="submit_user_like" class="btn btn-secondary" role="button">Like</a>
                     <button type="submit" value={{ quote.id }} name="submit_user_favourite" class="btn btn-secondary" role="button">Favourite</a>
                 </form>
             </div>
