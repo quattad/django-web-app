@@ -46,15 +46,18 @@
         {% for quote in quotes %}
             <li class="list-group-item">
                 <div> {{ quote.content }} </div>
-                <div> <b> {{ quote.author }} </b> </div>
 
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <form method = "post" action="?page={{ page }}&posts={{ posts }}">
-                    {% csrf_token %}
-                    <button type="submit" value={{ quote.id }} data-value={{ page }} name="submit_user_like" class="btn btn-secondary" role="button">Like</a>
-                    <button type="submit" value={{ quote.id }} name="submit_user_favourite" class="btn btn-secondary" role="button">Favourite</a>
-                </form>
-            </div>
+                <div class="d-flex justify-content-between">
+                    <div> <b> {{ quote.author }} </b> </div>
+                    
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <form method = "post" action="?page={{ page }}&posts={{ posts }}">
+                            {% csrf_token %}
+                            <button type="submit" value={{ quote.id }} name="submit_user_like" class="btn btn-primary" role="button">Like <span class="badge badge-pill badge-secondary"> {{ quote.no_user_likes }}</span></a>
+                            <button type="submit" value={{ quote.id }} name="submit_user_favourite" class="btn btn-primary" role="button">Favourite <span class="badge badge-pill badge-secondary"> {{ quote.no_user_favourites }}</span></a>
+                        </form>
+                    </div>
+                </div>
         {% endfor %}
             </li>
     </ul>
