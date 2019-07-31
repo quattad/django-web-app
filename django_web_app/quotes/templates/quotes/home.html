@@ -53,8 +53,12 @@
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <form method = "post" action="?page={{ page }}&posts={{ posts }}">
                             {% csrf_token %}
-                            <button type="submit" value={{ quote.id }} name="submit_user_like" class="btn btn-primary" role="button">Like <span class="badge badge-pill badge-secondary"> {{ quote.no_user_likes }}</span></a>
-                            <button type="submit" value={{ quote.id }} name="submit_user_favourite" class="btn btn-primary" role="button">Favourite <span class="badge badge-pill badge-secondary"> {{ quote.no_user_favourites }}</span></a>
+                                {% if not quote.check_liked %} 
+                                    <button type="submit" value={{ quote.id }} name="submit_user_like" class="btn btn-primary" role="button">Like <span class="badge badge-pill badge-secondary"> {{ quote.no_user_likes }}</span></a>
+                                {% else %}
+                                    <button type="submit" value={{ quote.id }} name="submit_user_like" class="btn btn-primary" role="button">Unlike <span class="badge badge-pill badge-secondary"> {{ quote.no_user_likes }}</span></a>
+                                {% endif %}
+                                <button type="submit" value={{ quote.id }} name="submit_user_favourite" class="btn btn-primary" role="button">Favourite </a>
                         </form>
                     </div>
                 </div>

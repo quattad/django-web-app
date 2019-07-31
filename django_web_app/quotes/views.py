@@ -44,6 +44,9 @@ def home(request):
                 quote.no_user_likes = q.like_set.all().count()  # generate number of user likes for particular quote
                 quote.no_user_favourites = q.favourite_set.all().count()  # generate number of user likes for particular quote
 
+                # check if quote has been liked by logged in user
+                quote.check_liked = check.values("check_liked")[0]['check_liked']
+                # check if quote has been favourited by logged in user
             quotes.append(quote)
         
         # Paginate quotes
@@ -56,20 +59,32 @@ def home(request):
         except EmptyPage:
             quotes = quote_paginator.page(page.num_pages)
         
-        return render(request, 'quotes/home.html', {'quotes': quotes, 'posts': posts, 'page': page, 'max_posts':list(range(3, 6))})
+        return render(request, 'quotes/home.html', {
+            'quotes': quotes, 'posts': posts, 'page': page, 'max_posts':list(range(3, 6))})
             
     
     elif request.method == "POST":
-        # URL queries are always fetched via GET, not POST
-        # request.POST.get() is only for retrieving from request.body
+        # URL queries are always fetched via GET, not POST; request.POST.get() is only for retrieving from request.body
         posts = request.GET.get('posts', 4)
         page = request.GET.get('page', 1)
 
         if request.user is not AnonymousUser and isinstance(request.POST.get('submit_user_like'), str):
 
-            # Creates Like entry in table quotes_like. Outputs (Like object, boolean on whether created)
-            Like.objects.get_or_create(user=request.user, quote_id = request.POST.get('submit_user_like'))
-            messages.success(request, "Liked!")
+            quote_id = request.POST.get("submit_user_like") 
+            like_obj, created = Like.objects.get_or_create(user=request.user, quote_id = quote_id) # Creates Like entry in table quotes_like. Outputs (Like object, boolean on whether created)
+            quote = Quote.objects.get(id=quote_id)
+
+            if (not created) and (quote.check_liked == True): # if (already in database) and (already liked by user)
+                quote.check_liked = False
+                quote.save()
+
+                Like.objects.filter(quote=quote_id).delete()
+
+                messages.success(request, "Unliked!")
+            else:
+                quote.check_liked = True
+                quote.save()
+                messages.success(request, "Liked!")
         
         elif request.user is not AnonymousUser and isinstance(request.POST.get('submit_user_favourite'), str):
             
