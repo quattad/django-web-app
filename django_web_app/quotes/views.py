@@ -44,9 +44,9 @@ def home(request):
                 quote.no_user_likes = q.like_set.all().count()  # generate number of user likes for particular quote
                 quote.no_user_favourites = q.favourite_set.all().count()  # generate number of user likes for particular quote
 
-                # check if quote has been liked by logged in user
-                quote.check_liked = check.values("check_liked")[0]['check_liked']
-                # check if quote has been favourited by logged in user
+                quote.check_liked = check.values("check_liked")[0]["check_liked"] # check if quote has been liked by logged in user
+                quote.check_favourited = check.values("check_favourited")[0]["check_favourited"] # check if quote has been favourited by logged in user
+
             quotes.append(quote)
         
         # Paginate quotes
@@ -77,9 +77,7 @@ def home(request):
             if (not created) and (quote.check_liked == True): # if (already in database) and (already liked by user)
                 quote.check_liked = False
                 quote.save()
-
                 Like.objects.filter(quote=quote_id).delete()
-
                 messages.success(request, "Unliked!")
             else:
                 quote.check_liked = True
@@ -88,8 +86,19 @@ def home(request):
         
         elif request.user is not AnonymousUser and isinstance(request.POST.get('submit_user_favourite'), str):
             
-            Favourite.objects.get_or_create(user=request.user, quote_id = request.POST.get('submit_user_favourite'))
-            messages.success(request, "Favourited!")
+            quote_id = request.POST.get("submit_user_favourite")
+            fav_obj, created = Favourite.objects.get_or_create(user=request.user, quote_id = request.POST.get('submit_user_favourite'))
+            quote = Quote.objects.get(id=quote_id)
+
+            if (not created) and (quote.check_favourited==True): # if (already in database) and (already liked by user)
+                quote.check_favourited = False
+                quote.save()
+                Favourite.objects.filter(quote=quote_id).delete()
+                messages.success(request, "Removed from favourites!")
+            else:
+                quote.check_favourited = True
+                quote.save()
+                messages.success(request, "Favourited!")
         
         # Build redirect string back to 'quotes-home' with 'posts' and 'page' url query
         base_url = reverse('quotes-home')
