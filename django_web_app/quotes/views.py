@@ -10,11 +10,12 @@ import requests, json, html
 from urllib.parse import urlencode
 
 from .models import Quote
+from .custom_modules.support_func import parse_content
 
 @login_required
 def home(request):
     """
-    Displays list of generated quotes from quotesonapi.
+    Displays list of generated quotes from quotesondesign.
     """
     if request.method == "GET":
         posts = request.GET.get('posts', 4)
@@ -26,14 +27,13 @@ def home(request):
         quotes = []
 
         for dict_item in data:
-            for key, value in dict_item.items():
-                if key == 'content':
-                    dict_item[key] = value.replace("<p>", "").replace("</p>", "").replace("<br />", "")
-                    dict_item[key] = html.unescape(dict_item[key])  # Replace numeric character references
-                
+
             quote = Quote()
+
+            quote.content = list(map(lambda d: parse_content(d), 
+            [value for key, value in dict_item.items() if key == "content"]))[0]
+
             quote.author = dict_item['title']
-            quote.content = dict_item['content']
 
             check = Quote.objects.filter(content=quote.content).all()   # returns Queryset if quote content exists
 
