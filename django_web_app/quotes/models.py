@@ -9,8 +9,6 @@ class Quote(models.Model):
     content = models.TextField(max_length=1000)
     author = models.CharField(max_length=100, default='author')
     date_posted = models.DateTimeField(auto_now_add=True)
-    user_liked = models.ManyToManyField(User, related_name='user_liked', blank=True)  # check if additional options need to be added
-    user_favourited = models.ManyToManyField(User, related_name='user_favourited', blank=True)
     no_user_likes = models.PositiveIntegerField(default=0)
     no_user_favourites = models.PositiveIntegerField(default=0)
     check_liked = models.BooleanField(default=False)
