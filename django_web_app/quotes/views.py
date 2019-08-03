@@ -13,6 +13,9 @@ from .models import Quote
 
 @login_required
 def home(request):
+    """
+    Displays list of generated quotes from quotesonapi.
+    """
     if request.method == "GET":
         posts = request.GET.get('posts', 4)
         page = request.GET.get('page', 1)
@@ -35,12 +38,11 @@ def home(request):
             check = Quote.objects.filter(content=quote.content).all()   # returns Queryset if quote content exists
 
             if not check:
-                print("Saving to database...") # If not in database
                 quote.save()
             else:
                 quote.id = check.values("id")[0]['id']  # If in database, store existing quote id into object sent for template rendering
                 
-                q = Quote.objects.get(content=quote.content)  # fetches quote from database
+                q = Quote.objects.get(id=quote.id)  # fetches quote from database
                 quote.no_user_likes = q.like_set.all().count()  # generate number of user likes for particular quote
                 quote.no_user_favourites = q.favourite_set.all().count()  # generate number of user likes for particular quote
 
@@ -102,6 +104,68 @@ def home(request):
         
         # Build redirect string back to 'quotes-home' with 'posts' and 'page' url query
         base_url = reverse('quotes-home')
+        query_string = urlencode({'page':page})
+        url = '{}?{}'.format(base_url, query_string)
+
+        return redirect(url)
+
+@login_required
+def favourites(request):
+    if request.method == "GET":
+        """
+        Shows list of favourited quotes by user
+        """
+        posts = request.GET.get('posts', 4)
+        page = request.GET.get('page', 1)
+
+        # Filter user favourites from Favourites table
+        quotes = Favourite.objects.filter(user=request.user).all()
+        # Get a list of Quote objects from Quotes table that match id
+        quotes = list(map(lambda quote_id: Quote.objects.get(id=quote_id), [quote.quote_id for quote in quotes]))
+        
+        if quotes:
+            quotes_paginator = Paginator(quotes, posts)
+
+            try:
+                quotes = quotes_paginator.get_page(page)
+            except PageNotAnInteger:
+                quotes = quotes_paginator.page(1)
+            except EmptyPage:
+                quotes = quotes_paginator.page(page.num_pages)
+
+        return render(request, 'quotes/favourites.html', {
+            'quotes': quotes, 
+            'posts': posts,
+            'page':page,
+            'max_posts': list(range(3, 6))
+            })
+    
+    elif request.method == "POST":
+
+        posts = request.GET.get('posts', 4)
+        page = request.GET.get('page', 1)
+        
+        if isinstance(request.POST.get('submit_user_favourite'), str):
+            
+            quote_id = request.POST.get("submit_user_favourite")
+            fav_obj, created = Favourite.objects.get_or_create(user=request.user, quote_id = request.POST.get('submit_user_favourite'))
+            quote = Quote.objects.get(id=quote_id)
+
+            if (not created) and (quote.check_favourited==True):
+                quote.check_favourited = False
+                quote.save()
+                Favourite.objects.filter(quote=quote_id).delete()
+                messages.success(request, "Removed from favourites!")
+            else:
+                quote.check_favourited = True
+                quote.save()
+                messages.success(request, "Favourited!")
+        
+        # To catch exception when all quotes on 1st page deleted
+        if not page:
+            page = 1
+
+        base_url = reverse('quotes-fav')
         query_string = urlencode({'page':page})
         url = '{}?{}'.format(base_url, query_string)
 
