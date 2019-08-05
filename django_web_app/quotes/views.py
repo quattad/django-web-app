@@ -10,7 +10,7 @@ import requests, json, html
 from urllib.parse import urlencode
 
 from .models import Quote
-from .custom_modules.support_func import parse_content
+from .custom_modules.support_func import parse_content, quotes_paginator
 
 @login_required
 def home(request):
@@ -52,14 +52,7 @@ def home(request):
             quotes.append(quote)
         
         # Paginate quotes
-        quote_paginator = Paginator(quotes, posts)
-        
-        try:
-            quotes = quote_paginator.get_page(page)
-        except PageNotAnInteger:
-            quotes = quote_paginator.page(1)
-        except EmptyPage:
-            quotes = quote_paginator.page(page.num_pages)
+        quotes = quotes_paginator(quotes, posts, page)
         
         return render(request, 'quotes/home.html', {
             'quotes': quotes, 'posts': posts, 'page': page, 'max_posts':list(range(3, 6))})
@@ -73,7 +66,7 @@ def home(request):
         if request.user is not AnonymousUser and isinstance(request.POST.get('submit_user_like'), str):
 
             quote_id = request.POST.get("submit_user_like") 
-            like_obj, created = Like.objects.get_or_create(user=request.user, quote_id = quote_id) # Creates Like entry in table quotes_like. Outputs (Like object, boolean on whether created)
+            like_obj, created = Like.objects.get_or_create(user=request.user, quote_id=quote_id) # Creates Like entry in table quotes_like. Outputs (Like object, boolean on whether created)
             quote = Quote.objects.get(id=quote_id)
 
             if (not created) and (quote.check_liked == True): # if (already in database) and (already liked by user)
@@ -124,14 +117,7 @@ def favourites(request):
         quotes = list(map(lambda quote_id: Quote.objects.get(id=quote_id), [quote.quote_id for quote in quotes]))
         
         if quotes:
-            quotes_paginator = Paginator(quotes, posts)
-
-            try:
-                quotes = quotes_paginator.get_page(page)
-            except PageNotAnInteger:
-                quotes = quotes_paginator.page(1)
-            except EmptyPage:
-                quotes = quotes_paginator.page(page.num_pages)
+            quotes = quotes_paginator(quotes, posts, page)
 
         return render(request, 'quotes/favourites.html', {
             'quotes': quotes, 
