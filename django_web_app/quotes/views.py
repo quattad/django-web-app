@@ -12,6 +12,10 @@ from urllib.parse import urlencode
 from .models import Quote
 from .custom_modules.support_func import parse_content, quotes_paginator
 
+def about(request):
+    return render(request, 'quotes/about.html', 
+    {'title': 'About'}
+    )
 @login_required
 def home(request):
     """

@@ -7,27 +7,11 @@ from django.views.generic import (ListView,
                                   UpdateView)
 from .models import Post
 
-# . means from models file in the current package
-
-# Create views
-
-
-"""
-Example of Function-Based View
-- Requires passing in the data
-"""
-
-
 def home(request):
     context = {
         'posts': Post.objects.all()  # pass in data from database
     }
     return render(request, 'blog/home.html', context)
-
-
-"""
-Example of Class-Based View
-- only need to use a few lines of code if you stick to conventions strictly"""
 
 
 # Should be a ListView

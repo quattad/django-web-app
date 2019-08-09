@@ -21,21 +21,20 @@
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Quote Buddy</a>
+          <a class="navbar-brand mr-4" href="{% url 'quotes-home' %}">Quote Buddy</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
-              <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+              <a class="nav-item nav-link" href="{% url 'quotes-home' %}">Home</a>
+              <a class="nav-item nav-link" href="{% url 'quotes-about' %}">About</a>
               <a class="nav-item nav-link" href ="{% url 'quotes-home' %}">Quotes</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
                 {% if user.is_authenticated %}  <!-- Run check if user is logged in or not -->
                   <a class="nav-item nav-link" href="{% url 'quotes-fav' %}">Favourites</a>
-                  <a class="nav-item nav-link" href="{% url 'post-create' %}">Create Post</a>
                   <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                   <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                 {% else %}

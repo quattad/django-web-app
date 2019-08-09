@@ -24,7 +24,7 @@ from django.conf.urls.static import static
 
 # Use include for routing, should be the best way
 urlpatterns = [
-    path('', include('blog.urls')),
+    path('', include('quotes.urls')),
     path('quotes/', include('quotes.urls')),
     path('admin/', admin.site.urls),
     path('register/', users_views.register, name='register'),
