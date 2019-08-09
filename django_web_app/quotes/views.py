@@ -66,10 +66,10 @@ def home(request):
         if request.user is not AnonymousUser and isinstance(request.POST.get('submit_user_like'), str):
 
             quote_id = request.POST.get("submit_user_like") 
-            like_obj, created = Like.objects.get_or_create(user=request.user, quote_id=quote_id) # Creates Like entry in table quotes_like. Outputs (Like object, boolean on whether created)
+            Like.objects.get_or_create(user=request.user, quote_id=quote_id) # Creates Like entry in table quotes_like. Outputs (Like object, boolean on whether created)
             quote = Quote.objects.get(id=quote_id)
 
-            if (not created) and (quote.check_liked == True): # if (already in database) and (already liked by user)
+            if (quote.check_liked == True):
                 quote.check_liked = False
                 quote.save()
                 Like.objects.filter(quote=quote_id).delete()
@@ -82,10 +82,10 @@ def home(request):
         elif request.user is not AnonymousUser and isinstance(request.POST.get('submit_user_favourite'), str):
             
             quote_id = request.POST.get("submit_user_favourite")
-            fav_obj, created = Favourite.objects.get_or_create(user=request.user, quote_id = request.POST.get('submit_user_favourite'))
+            Favourite.objects.get_or_create(user=request.user, quote_id = request.POST.get('submit_user_favourite'))
             quote = Quote.objects.get(id=quote_id)
 
-            if (not created) and (quote.check_favourited==True): # if (already in database) and (already liked by user)
+            if (quote.check_favourited==True):
                 quote.check_favourited = False
                 quote.save()
                 Favourite.objects.filter(quote=quote_id).delete()
@@ -134,18 +134,14 @@ def favourites(request):
         if isinstance(request.POST.get('submit_user_favourite'), str):
             
             quote_id = request.POST.get("submit_user_favourite")
-            fav_obj, created = Favourite.objects.get_or_create(user=request.user, quote_id = request.POST.get('submit_user_favourite'))
+            Favourite.objects.get_or_create(user=request.user, quote_id = request.POST.get('submit_user_favourite'))
             quote = Quote.objects.get(id=quote_id)
 
-            if (not created) and (quote.check_favourited==True):
+            if (quote.check_favourited == True):
                 quote.check_favourited = False
                 quote.save()
                 Favourite.objects.filter(quote=quote_id).delete()
                 messages.success(request, "Removed from favourites!")
-            else:
-                quote.check_favourited = True
-                quote.save()
-                messages.success(request, "Favourited!")
         
         # To catch exception when all quotes on 1st page deleted
         if not page:
