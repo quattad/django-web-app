@@ -8,13 +8,16 @@
           <!-- Add Cross Site Request Forgery Token. Required for form to work -->
           {% csrf_token %}
           <fieldset class="form-group">  <!-- form-group is a bootstrap class -->
-              <legend class=""border-bottom mb-4">Login</legend>
+              <legend class="border-bottom mb-4">Login</legend>
               {{ form | crispy }}
           </fieldset>
           <div class="form-group">
               <button class="btn btn-outline-info" type="submit">Login!</button>
           </div>
       </form>
+      <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-social btn-facebook"><span class="fab fa-facebook-square"></span>Log In with Facebook</a>
+      <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-social btn-google"><span class="fab fa-google"></span>Log In With Google</a>
+      <br />
       <div class="border-top pt-3">
           <small class="text-muted">
               Don't have an account? <a class="ml-2" href="{% url 'register' %}">Create an account.</a>

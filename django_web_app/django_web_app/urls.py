@@ -30,8 +30,10 @@ urlpatterns = [
     path('register/', users_views.register, name='register'),
     path('profile/', users_views.profile, name='profile'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),  # pass location as an argument into as_view function to change default directory for html
-    path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout')
-]
+    path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
+    path('social-auth/', include('social_django.urls', namespace='social')),  # namespace prevents psa name collision with existing app names
+    path('changepassword/', users_views.change_password, name='change-password')
+    ]
 
 # Add this only if we are in debug mode. i.e. not ideal for production!
 if settings.DEBUG:

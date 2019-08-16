@@ -6,15 +6,26 @@
     <meta charset="utf-8">
     <!-- Optimize for mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta name="google-signin-client_id" content="236837835403-838sd6soqe52qtmffmd3i570kiub09r8.apps.googleusercontent.com">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/bootstrap-social.css' %}">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/763ae0d826.js"></script>
+    <!-- Materialize CSS -->
+    <!-- Compiled and minified CSS -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+    <!-- Compiled and minified JavaScript -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     {% if title %}
-        <title>Django Blog - {{ title }}</title>
+        <title>Quote Buddy - {{ title }}</title>
     {% else %}
-        <title>Django Blog</title>
+        <title>Quote Buddy</title>
     {% endif %}
 </head>
 <body>
@@ -29,11 +40,11 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'quotes-home' %}">Home</a>
               <a class="nav-item nav-link" href="{% url 'quotes-about' %}">About</a>
-              <a class="nav-item nav-link" href ="{% url 'quotes-home' %}">Quotes</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
                 {% if user.is_authenticated %}  <!-- Run check if user is logged in or not -->
+                  <a class="nav-item nav-link" href ="{% url 'quotes-home' %}">Quotes</a>
                   <a class="nav-item nav-link" href="{% url 'quotes-fav' %}">Favourites</a>
                   <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                   <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
@@ -59,12 +70,21 @@
       </div>
     </main>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery, Popper.js, Bootstrap JS -->
-    <!-- Guarantee the DOM will be loaded whe the script is executed -->
-    <!-- Avoid inline scripts (at least scripts that uses jQuery) -->
+    <!-- BEGIN FOOTER -->
+    <footer class="footer mt-auto py-4">
+      <div class="container">
+        <span class="text-muted">Developed by Quattad.</span>
+      </div>
+    </footer>
+    <!-- END FOOTER -->
+
+    <!-- Optional JavaScript: jQuery, Popper.js, Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- START GOOGLE PLATFORM LIBRARY -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- END GOOGLE PLATFORM LIBRARY-->
 </body>
 </html>
