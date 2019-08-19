@@ -17,6 +17,5 @@ urlpatterns = [
     path('post/create', PostCreateView.as_view(), name='post-create'),  # follows same template as update. create new template called 'post_form.html'
     path('post/<int:pk>/update', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete', PostDeleteView.as_view(), name='post-delete'),
-    path('about/', views.about, name='blog-about'),
     path('quotes/', include('quotes.urls'))
 ]
