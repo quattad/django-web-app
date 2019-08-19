@@ -1,0 +1,35 @@
+html, body {
+    height:100%;
+    width:100%;
+}
+
+#home {
+    /* img url  https://www.nbcnews.com/better/pop-culture/why-getting-lost-book-so-good-you-according-science-ncna893256 */
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../img/landing-bg.jpeg") no-repeat center center fixed;
+    display: table;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    background-size: cover;
+}
+
+#home-background {
+    object-fit:cover;
+    filter: brightness(50%)
+}
+
+.landing-text {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+}
+
+.landing-text h1 {
+    font-size:300%;
+    font-weight:200px;
+}
+
+.padding {
+    padding: 80px 0;  /* top bot 80px; left right 0px;*/
+}

@@ -13,12 +13,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'blog/bootstrap-social.css' %}">
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/763ae0d826.js"></script>
-    <!-- Materialize CSS -->
-    <!-- Compiled and minified CSS -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
-    <!-- Compiled and minified JavaScript -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
-
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -44,7 +38,6 @@
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
                 {% if user.is_authenticated %}  <!-- Run check if user is logged in or not -->
-                  <a class="nav-item nav-link" href ="{% url 'quotes-home' %}">Quotes</a>
                   <a class="nav-item nav-link" href="{% url 'quotes-fav' %}">Favourites</a>
                   <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                   <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
@@ -73,7 +66,7 @@
     <!-- BEGIN FOOTER -->
     <footer class="footer mt-auto py-4">
       <div class="container">
-        <span class="text-muted">Developed by Quattad.</span>
+        <span class="text-muted">Developed by Jonathan Quah / quattad.</span>
       </div>
     </footer>
     <!-- END FOOTER -->

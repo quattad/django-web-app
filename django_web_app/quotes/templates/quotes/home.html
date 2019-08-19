@@ -54,12 +54,12 @@
                         <form method = "post" action="?page={{ page }}&posts={{ posts }}">
                             {% csrf_token %}
                                 {% if not quote.check_liked %} 
-                                    <button type="submit" value={{ quote.id }} name="submit_user_like" class="btn btn-primary" role="button"><img src="{% static "icons/thumbsup.svg" %}"> Like <span class="badge badge-pill badge-secondary"> {{ quote.no_user_likes }}</span></a>
+                                    <button type="submit" value={{ quote.id }} name="submit_user_like" class="btn btn-primary" role="button"><img src="{% static "quotes/icons/thumbsup.svg" %}"> Like <span class="badge badge-pill badge-secondary"> {{ quote.no_user_likes }}</span></a>
                                 {% else %}
-                                    <button type="submit" value={{ quote.id }} name="submit_user_like" class="btn btn-primary" role="button"><img src="{% static "icons/thumbsdown.svg" %}"> Unlike <span class="badge badge-pill badge-secondary"> {{ quote.no_user_likes }}</span></a>
+                                    <button type="submit" value={{ quote.id }} name="submit_user_like" class="btn btn-primary" role="button"><img src="{% static "quotes/icons/thumbsdown.svg" %}"> Unlike <span class="badge badge-pill badge-secondary"> {{ quote.no_user_likes }}</span></a>
                                 {% endif %}
                                 {% if not quote.check_favourited %}
-                                    <button type="submit" value={{ quote.id }} name="submit_user_favourite" class="btn btn-primary" role="button"><img src="{% static "icons/star.svg" %}"> Favourite </a>
+                                    <button type="submit" value={{ quote.id }} name="submit_user_favourite" class="btn btn-primary" role="button"><img src="{% static "/quotes/icons/star.svg" %}"> Favourite </a>
                                 {% else %}
                                     <button type="submit" value={{ quote.id }} name="submit_user_favourite" class="btn btn-primary" role="button">Unfavourite </a>
                                 {% endif %}

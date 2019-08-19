@@ -156,3 +156,8 @@ def favourites(request):
         url = '{}?{}'.format(base_url, query_string)
 
         return redirect(url)
+
+def landing(request):
+    if request.method == "GET":
+        context = {'hello_msg':"Hello World!"}
+        return render(request, 'quotes/landing.html', context)
