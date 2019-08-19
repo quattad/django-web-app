@@ -6,7 +6,7 @@ chardet==3.0.4
 colorama==0.4.1
 coverage==4.5.4
 defusedxml==0.6.0
-Django==2.2.3
+Django==2.2.4
 django-crispy-forms==1.7.2
 django-discover-runner==1.0
 django-webtest==1.9.7
@@ -28,6 +28,7 @@ pytest==5.0.1
 pytest-cov==2.7.1
 pytest-django==3.5.1
 python-dateutil==2.8.0
+python-dotenv==0.10.3
 python3-openid==3.1.0
 pytz==2019.1
 requests==2.22.0
