@@ -36,14 +36,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = [] 
 
-
 """
 Define apps (e.g. blog, users) and other middleware here essential for authentication and sessions
 Can define full path to object (e.g. blog.apps.BlogConfig) or by class name (e.g. 'blog)
 """
 
 INSTALLED_APPS = [
-    'blog.apps.BlogConfig',
+    # 'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'quotes.apps.QuotesConfig',
     'crispy_forms',

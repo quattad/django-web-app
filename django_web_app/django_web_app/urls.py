@@ -22,7 +22,7 @@ from users import views as users_views
 from django.conf import settings
 from django.conf.urls.static import static
 
-# Use include for routing, should be the best way
+# Use include for routing
 urlpatterns = [
     path('', include('quotes.urls')),
     path('quotes/', include('quotes.urls')),
