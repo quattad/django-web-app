@@ -13,9 +13,13 @@ Register applications, define location of static files, database configuration d
 """
 
 import os
+
 # Load keys using dotenv
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(verbose=True)
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # Support for svg and svgz
 import mimetypes
@@ -24,12 +28,9 @@ mimetypes.add_type("image/svg+xml", ".svgz", True)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+print(str(BASE_DIR))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,8 +38,8 @@ DEBUG = True
 ALLOWED_HOSTS = [] 
 
 """
-Define apps (e.g. blog, users) and other middleware here essential for authentication and sessions
-Can define full path to object (e.g. blog.apps.BlogConfig) or by class name (e.g. 'blog)
+Define apps and other middleware here essential for authentication and sessions
+Can define full path to object or by class name
 """
 
 INSTALLED_APPS = [
@@ -53,6 +54,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django'
 ]
+
+# Configure django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", __file__)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

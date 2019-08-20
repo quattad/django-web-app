@@ -1,0 +1,9 @@
+{
+    "sqltools.connections": [
+        {
+            "database": ".\\django_web_app\\db.sqlite3",
+            "dialect": "SQLite",
+            "name": "connect_1"
+        }
+    ]
+}

@@ -1,5 +1,8 @@
 .gitignore template from github / gitignore
 
+# Temporarily prevent commit of settings.py file
+settings.py
+
 # Prevent commit of idea files
 *.idea/
 *.xml/
@@ -15,13 +18,9 @@ __pycache__/
 
 *$py.class
 
-
-
 # C extensions
 
 *.so
-
-
 
 # Distribution / packaging
 
