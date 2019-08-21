@@ -12,10 +12,6 @@ from urllib.parse import urlencode
 from .models import Quote
 from .custom_modules.support_func import parse_content, quotes_paginator
 
-def about(request):
-    return render(request, 'quotes/about.html', 
-    {'title': 'About'}
-    )
 @login_required
 def home(request):
     """
@@ -158,6 +154,4 @@ def favourites(request):
         return redirect(url)
 
 def landing(request):
-    if request.method == "GET":
-        context = {'hello_msg':"Hello World!"}
-        return render(request, 'quotes/landing.html', context)
+        return render(request, 'quotes/landing.html')

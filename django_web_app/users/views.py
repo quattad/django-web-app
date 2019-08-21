@@ -1,25 +1,15 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages  # specify what messages you want to add
+from django.contrib import messages  # specify messages to add
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash # what is this for?
+from django.contrib.auth import update_session_auth_hash 
 from social_django.models import UserSocialAuth
 
 """
-Message types:
-message.debug
-message.info
-message.success
-message.warning
+Message types: message.debug, message.info, message.success, message.warning
 """
 
-# Create a register view
-"""
-Usually if you build from scratch, need to rewrite a lot of form validations, etc
-Best to create python classes that can generate HTML
-Use user creation form 
-"""
 def register(request):
     if request.method == 'GET':
         form = UserRegisterForm()
@@ -38,10 +28,10 @@ def profile(request):
     user = request.user
     
     if request.method == 'GET':
-        u_form = UserUpdateForm(instance=request.user)   # can populate form by passing in instance of object that it expects
+        u_form = UserUpdateForm(instance=request.user)   # populate form by passing in instance of object that it expects
         p_form = ProfileUpdateForm(instance=request.user.profile)
     else:
-        u_form = UserUpdateForm(request.POST, instance=request.user)  # pass in POST data as well
+        u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
@@ -55,14 +45,12 @@ def profile(request):
     # Facebook Linking
     try: 
         facebook_login = user.social_auth.get(provider='facebook')
-        print(facebook_login)
     except UserSocialAuth.DoesNotExist:
         facebook_login = None
 
     # Google OAuth2 Linking
     try:
         google_login = user.social_auth.get(provider='google-oauth2')
-        print(google_login.extra_data)
     except UserSocialAuth.DoesNotExist:
         google_login = None
 

@@ -16,6 +16,9 @@ from selenium import webdriver
 # Import necessary models for test databases
 from ..models import Quote  # import from one dir up
 
+############################################################################
+#############################  QUOTES/HOME   ###############################
+############################################################################
 @pytest.mark.django_db
 class TestHomeViews(TestCase):
 
@@ -97,7 +100,7 @@ class TestHomeViews(TestCase):
         """
         Checks if page accessible via name in urls.py i.e. quotes-home
         """
-        request = self.factory.get('/quotes/')
+        request = self.factory.get(reverse('quotes-home'))
 
         request.user = mixer.blend(User)
         response = home(request)
@@ -205,30 +208,29 @@ class TestHomeViews(TestCase):
         """
         Checks that POST request for both Like if unauthenticated user, should redirect to login page
         """
-
-        # Send get request to obtain redirect url
-        response_get = self.client.get(reverse('quotes-home'))
         
         response = self.client.post(reverse('quotes-home'), {
             "submit_user_like": 1
             })
 
-        self.assertRedirects(response, response_get.url)
+        self.assertRedirects(response, '%s?next=%s' % (reverse('login'), reverse('quotes-home')))
 
     def test_quotes_home_view_post_anonymous_fav(self):
         """
         Checks that POST request for both Like if unauthenticated user, should redirect to login page
         """
 
-        # Send get request to obtain redirect url
-        response_get = self.client.get(reverse('quotes-home'))
-
         response = self.client.post(reverse('quotes-home'), {
             "submit_user_favourite": 2
             })
 
-        self.assertRedirects(response, response_get.url)
+        self.assertRedirects(response, '%s?next=%s' % (reverse('login'), reverse('quotes-home')))
 
+############################################################################
+#############################     FAVOURITES     ###########################
+############################################################################
+
+@pytest.mark.django_db
 class TestFavouritesView(TestCase):
     @classmethod  # ensure class parameter gets passed
     def setUpClass(cls):  # pass in class instance
@@ -274,7 +276,7 @@ class TestFavouritesView(TestCase):
         assert 'login' in response.url   # check if request was successful. 302 is redirect code - should be to login view
     
 
-    ######################### RESPONSE #########################
+    ######################### RESPONSE ##########################
     def test_quotes_favourites_view_get_response_success(self):
         self.client.force_login(mixer.blend(User))
         response = self.client.get(reverse('quotes-fav'))
@@ -307,3 +309,24 @@ class TestFavouritesView(TestCase):
         """
 
         self.client.force_login(mixer.blend(User))
+
+############################################################################
+#############################     LANDING        ###########################
+############################################################################
+class TestLandingView(TestCase):
+    @classmethod  # ensure class parameter gets passed
+    def setUpClass(cls):  # pass in class instance
+        """
+        Instantiate items that will be repeated throughout tests to prevent
+        repeated instantiation; saves time
+        """
+        super(TestLandingView, cls).setUpClass()  # calls setUpClass of TestCase
+        cls.factory = RequestFactory()
+        cls.client = Client()
+
+    def test_quotes_landing_url_get_response_success(self):
+        """
+        Returns landing page; simple get request should succeed
+        """
+        response = self.client.get(reverse('quotes-landing'))
+        self.assertEqual(response.status_code, 200)
