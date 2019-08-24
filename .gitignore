@@ -1,4 +1,5 @@
 .gitignore template from github / gitignore
+.vscode
 
 # Temporarily prevent commit of settings.py file
 settings.py
