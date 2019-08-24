@@ -14,6 +14,9 @@ Register applications, define location of static files, database configuration d
 
 import os
 
+# Deployment config
+import django_heroku
+
 # Load keys using dotenv
 # from dotenv import load_dotenv
 # load_dotenv(verbose=True)
@@ -237,6 +240,9 @@ AUTHENTICATION_BACKENDS = [
 # Ensures 'media' directory is created at project base
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # full path to directory where django should store uploaded files. stored in filesystem, not database
 MEDIA_URL = '/media/'
+
+# Activate django-heroku
+django_heroku.settings(locals())
 
 """
 GLOSSARY
