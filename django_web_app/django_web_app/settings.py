@@ -15,8 +15,8 @@ Register applications, define location of static files, database configuration d
 import os
 
 # Load keys using dotenv
-from dotenv import load_dotenv
-load_dotenv(verbose=True)
+# from dotenv import load_dotenv
+# load_dotenv(verbose=True)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
@@ -28,14 +28,14 @@ mimetypes.add_type("image/svg+xml", ".svgz", True)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print(str(BASE_DIR))
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [] 
+ALLOWED_HOSTS = ['127.0.0.1', 'quote-buddy.herokuapp.com'] 
 
 """
 Define apps and other middleware here essential for authentication and sessions
@@ -137,7 +137,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, '_staticfiles_')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
