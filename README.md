@@ -1,18 +1,11 @@
-# Django Web Application
+## Quote Buddy
 
-This is a sample project done by following the tutorials of Corey Schafer to practice developing and deploying
-a web application.
+Quote Buddy is a simple web application that allows you to generate quotes using the [Quotes on Design API](https://quotesondesign.com/api-v4-0/).
 
-### Table of Contents
-* [Prerequisites](#prerequisites)
+## Description
+See the project [here](http://quote-buddy.herokuapp.com/).
 
-### Prerequisites
-
-```
-Give examples
-```
-
-### Installing
+### Installation
 
 Install virtualenvwrapper or virtualenvwrapper-win for Windows.
 
@@ -20,28 +13,25 @@ Install virtualenvwrapper or virtualenvwrapper-win for Windows.
 $ pip install virtualenvwrapper-win
 ```
 
-Change directory to project folder and create migrations file:
+Create and activate virtual environment.
+
+```
+$ mkvirtualenv quote-buddy
+$ workon quote-buddy
+```
+
+Clone remote repository into desired local directory and install requirements using pip.
+
+```
+$ git clone https://github.com/quattad/quote-buddy.git
+$ pip install requirements.txt
+```
+
+Create SQLite3 database
 
 ```
 $ python manage.py makemigrations
-```
-
-Check that generated migrations file (e.g. 0001_initial.py) contains SQL code to create table:
-
-```
-$ python manage.py sqlmigrate blog 0001
-```
-
-Create table blog_post:
-
-```
 $ python manage.py migrate
-```
-
-Check that table has been successfully created:
-
-```
-$ python 
 ```
 
 Run the development server:
@@ -49,57 +39,29 @@ Run the development server:
 $ python manage.py runserver
 ```
 
-Run Python API to access and retrieve from database:
-
-```
-$ python manage.py shell
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
 ## Running the tests
 
-Explain how to run the automated tests for this system
+Tests were created using pytest.
 
-### Break down into end to end tests
-
-Explain what these tests test and why
+Change directory into the project folder and run
 
 ```
-Give an example
+pytest
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+Tests are mainly centered around view.py files for the various applications. They are categorized into Authentication, Response, Post Requests and Conditionals.
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+The current prototype for Quote Buddy has been deployed on [Heroku](http://quote-buddy.herokuapp.com/).
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning.
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Jonathan Quah** - [Github](https://github.com/quattad) | [Personal Website](https://quattad.github.io)
 
 ## License
 
@@ -107,6 +69,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Big thanks to [Corey Schafer](https://github.com/CoreyMSchafer). This project (and my preliminary understanding of Django) was based on his tutorials.
