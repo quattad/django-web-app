@@ -24,7 +24,7 @@ Clone remote repository into desired local directory and install requirements us
 
 ```
 $ git clone https://github.com/quattad/quote-buddy.git
-$ pip install requirements.txt
+$ pip install -r requirements.txt
 ```
 
 Create SQLite3 database
@@ -32,6 +32,12 @@ Create SQLite3 database
 ```
 $ python manage.py makemigrations
 $ python manage.py migrate
+```
+
+Collect staticfiles to ensure that staticfiles are executed.
+
+```
+$ python manage.py collectstatic
 ```
 
 Run the development server:
