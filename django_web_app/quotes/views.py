@@ -23,7 +23,11 @@ def home(request):
         page = request.GET.get('page', 1)
         
         # response = requests.get("https://quotesondesign.com/wp-json/wp/v2/posts?filter[orderby]=rand&filter[posts_per_page]=30")
+<<<<<<< HEAD
         response = requests.get("https://quotesondesign.com/wp-json/wp/v2/posts/?orderby=rand&filter[posts_per_page]=30")
+=======
+        response = requests.get("https://quotesondesign.com/wp-json/wp/v2/posts/?orderby=rand&filter[posts_per_page]=20")
+>>>>>>> 42deab70f870a2693b81df850d50dcbc9bc04124
 
         data = response.json()
 
