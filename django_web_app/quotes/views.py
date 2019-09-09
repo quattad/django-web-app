@@ -18,10 +18,13 @@ def home(request):
     Displays list of generated quotes from quotesondesign.
     """
     if request.method == "GET":
+        
         posts = request.GET.get('posts', 4)
         page = request.GET.get('page', 1)
         
-        response = requests.get("https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=30")
+        # response = requests.get("https://quotesondesign.com/wp-json/wp/v2/posts?filter[orderby]=rand&filter[posts_per_page]=30")
+        response = requests.get("https://quotesondesign.com/wp-json/wp/v2/posts/?orderby=rand&filter[posts_per_page]=30")
+
         data = response.json()
 
         quotes = []
@@ -31,9 +34,9 @@ def home(request):
             quote = Quote()
 
             quote.content = list(map(lambda d: parse_content(d), 
-            [value for key, value in dict_item.items() if key == "content"]))[0]
+            [value['rendered'] for key, value in dict_item.items() if key == "content"]))[0]  # temporary update after API v5.0 
 
-            quote.author = dict_item['title']
+            quote.author = dict_item['title']['rendered']  # temporary update after API v5.0
 
             check = Quote.objects.filter(content=quote.content).all()   # returns Queryset if quote content exists
 
@@ -97,7 +100,7 @@ def home(request):
         
         # Build redirect string back to 'quotes-home' with 'posts' and 'page' url query
         base_url = reverse('quotes-home')
-        query_string = urlencode({'page':page})
+        query_string = urlencode({'posts':posts,'page':page})
         url = '{}?{}'.format(base_url, query_string)
 
         return redirect(url)

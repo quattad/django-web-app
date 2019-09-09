@@ -1,4 +1,4 @@
-from django.test import RequestFactory, Client
+from django.test import TestCase, RequestFactory, Client, override_settings
 from django.urls import reverse
 from django.contrib.auth.models import User, AnonymousUser
 from quotes.views import home, favourites
@@ -9,10 +9,6 @@ import pytest
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 
-# Import test engines
-from django.test import TestCase
-from selenium import webdriver
-
 # Import necessary models for test databases
 from ..models import Quote  # import from one dir up
 
@@ -20,8 +16,8 @@ from ..models import Quote  # import from one dir up
 #############################  QUOTES/HOME   ###############################
 ############################################################################
 @pytest.mark.django_db
+@override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
 class TestHomeViews(TestCase):
-
     @classmethod  # ensure class parameter gets passed
     def setUpClass(cls):  # pass in class instance
         """
@@ -231,6 +227,7 @@ class TestHomeViews(TestCase):
 ############################################################################
 
 @pytest.mark.django_db
+@override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
 class TestFavouritesView(TestCase):
     @classmethod  # ensure class parameter gets passed
     def setUpClass(cls):  # pass in class instance
