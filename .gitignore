@@ -1,8 +1,8 @@
 .gitignore template from github / gitignore
 .vscode
 
-# Temporarily prevent commit of settings.py file
-settings.py
+# Prevent commit of local static files
+staticfiles
 
 # Prevent commit of idea files
 *.idea/
